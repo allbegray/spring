@@ -74,12 +74,11 @@
                 del: false,
                 refresh: true
             });
-
-            function selectRow() {
-                jQuery('#jqGrid').jqGrid('setSelection', '1');
-            }
-
         });
+
+        function selectRow() {
+            jQuery('#jqGrid').jqGrid('setSelection', '1');
+        }
     </script>
 </head>
 <body>
