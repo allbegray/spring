@@ -194,6 +194,13 @@
             <version>3.3.2</version>
         </dependency>
 
+        <!-- guava -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>18.0</version>
+        </dependency>
+
         <!-- test -->
         <dependency>
             <groupId>junit</groupId>
@@ -335,10 +342,13 @@
                     </jdbc>
                     <generator>
                         <name>org.jooq.util.DefaultGenerator</name>
+                        <strategy>
+                            <name>org.jooq.util.example.JPrefixGeneratorStrategy</name>
+                        </strategy>
                         <database>
                             <name>org.jooq.util.h2.H2Database</name>
                             <includes>.*</includes>
-                            <excludes></excludes>
+                            <excludes>schema_version</excludes>
                             <inputSchema>PUBLIC</inputSchema>
                         </database>
                         <target>
