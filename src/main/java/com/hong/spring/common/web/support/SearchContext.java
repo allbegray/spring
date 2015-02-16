@@ -2,13 +2,17 @@ package com.hong.spring.common.web.support;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringStyle;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.util.StringUtils;
 
 public class SearchContext {
 
     private int rows;
     private int page;
     private String sidx;
-    private String sord;
+    private String sord = Sort.Direction.ASC.toString().toLowerCase();
 
     public int getRows() {
         return rows;
@@ -40,6 +44,14 @@ public class SearchContext {
 
     public void setSord(String sord) {
         this.sord = sord;
+    }
+
+    public Pageable getPageRequest() {
+        Sort sort = null;
+        if (StringUtils.hasText(sidx)) {
+            sort = new Sort(Sort.Direction.fromString(sord), sidx.toUpperCase());
+        }
+        return new PageRequest(page - 1, rows, sort);
     }
 
     @Override

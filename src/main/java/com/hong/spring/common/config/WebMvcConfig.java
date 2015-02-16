@@ -3,6 +3,7 @@ package com.hong.spring.common.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.data.web.config.EnableSpringDataWebSupport;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.servlet.View;
 import org.springframework.web.servlet.ViewResolver;
@@ -14,6 +15,7 @@ import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import org.springframework.web.servlet.view.json.MappingJackson2JsonView;
 
 @EnableWebMvc
+@EnableSpringDataWebSupport
 @ComponentScan(basePackages = {"com.hong.spring"}, includeFilters = @ComponentScan.Filter(Controller.class), excludeFilters = {@ComponentScan.Filter(Configuration.class)})
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {

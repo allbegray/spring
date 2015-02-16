@@ -1,5 +1,7 @@
 package com.hong.spring.common.jqgrid;
 
+import org.springframework.data.domain.Page;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -14,6 +16,13 @@ public class JqGrid<T> {
     private Map<String, Object> userdatas;
 
     public JqGrid() {
+    }
+
+    public JqGrid(Page<T> page) {
+        this.setRows(page.getContent());
+        this.setRecords(page.getTotalElements());
+        this.setTotal(page.getTotalPages());
+        this.setPage(page.getNumber() + 1);
     }
 
     public long getPage() {

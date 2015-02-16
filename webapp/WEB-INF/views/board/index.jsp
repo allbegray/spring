@@ -26,6 +26,9 @@
                 datatype: "json",
                 jsonReader: {
                     root: "jqGrid.rows",
+                    page: "jqGrid.page",
+                    total: "jqGrid.total",
+                    records: "jqGrid.records",
                     repeatitems : false,
                     id: "id"
                 },
