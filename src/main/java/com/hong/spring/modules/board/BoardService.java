@@ -18,8 +18,8 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     @Transactional(readOnly = true)
-    public Board getById(int id) {
-        return boardRepository.getById(id);
+    public Board findById(long id) {
+        return boardRepository.findById(id);
     }
 
     @Transactional(readOnly = true)
