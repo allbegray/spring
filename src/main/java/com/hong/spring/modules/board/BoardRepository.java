@@ -4,9 +4,6 @@ import com.hong.spring.common.dao.JOOQGenericDao;
 import com.hong.spring.domains.Board;
 import com.hong.spring.modules.board.support.BoardSearchContext;
 import org.jooq.Condition;
-import org.jooq.Field;
-import org.jooq.impl.TableImpl;
-import org.jooq.util.maven.example.tables.JBoard;
 import org.jooq.util.maven.example.tables.records.JBoardRecord;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
@@ -20,7 +17,7 @@ import static org.jooq.util.maven.example.tables.JBoard.BOARD;
 public class BoardRepository extends JOOQGenericDao<JBoardRecord, Board, Long> {
 
     public BoardRepository() {
-        super(JBoard.BOARD, Board.class);
+        super(BOARD, Board.class);
     }
 
     @Override
