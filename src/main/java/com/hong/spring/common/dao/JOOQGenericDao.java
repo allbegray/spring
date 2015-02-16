@@ -15,7 +15,7 @@ import java.util.Iterator;
 import java.util.List;
 
 @SuppressWarnings("rawtypes")
-public abstract class JOOQGenericDao<E, R extends Record, T extends TableImpl<R>> implements GenericDao<E> {
+public abstract class JOOQGenericDao<E, R extends Record> implements GenericDao<E> {
 
     protected Class<E> entityClass;
     private java.lang.reflect.Field entityKeyField;

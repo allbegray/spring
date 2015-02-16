@@ -17,7 +17,7 @@ import java.util.List;
 import static org.jooq.util.maven.example.tables.JBoard.BOARD;
 
 @Repository
-public class BoardRepository extends JOOQGenericDao<Board, JBoardRecord, JBoard> {
+public class BoardRepository extends JOOQGenericDao<Board, JBoardRecord> {
 
     @Override
     public Field<Integer> getKeyField() {
