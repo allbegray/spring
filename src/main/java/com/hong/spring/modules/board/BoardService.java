@@ -18,6 +18,11 @@ public class BoardService {
     private BoardRepository boardRepository;
 
     @Transactional(readOnly = true)
+    public Board getById(int id) {
+        return boardRepository.getById(id);
+    }
+
+    @Transactional(readOnly = true)
     public Page<Board> getListByContext(BoardSearchContext searchContext) {
         long totalCount = boardRepository.getTotalCountByContext(searchContext);
         List<Board> boardList = boardRepository.getListByContext(searchContext);

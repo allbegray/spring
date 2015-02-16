@@ -4,9 +4,10 @@ import com.hong.spring.common.dao.JOOQGenericDao;
 import com.hong.spring.domains.Board;
 import com.hong.spring.modules.board.support.BoardSearchContext;
 import org.jooq.Condition;
-import org.jooq.DSLContext;
+import org.jooq.Field;
+import org.jooq.impl.TableImpl;
 import org.jooq.util.maven.example.tables.JBoard;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.jooq.util.maven.example.tables.records.JBoardRecord;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Repository;
 import org.springframework.util.StringUtils;
@@ -16,13 +17,20 @@ import java.util.List;
 import static org.jooq.util.maven.example.tables.JBoard.BOARD;
 
 @Repository
-public class BoardRepository extends JOOQGenericDao<Board, JBoard> {
+public class BoardRepository extends JOOQGenericDao<Board, JBoardRecord, JBoard> {
 
-    @Autowired
-    private DSLContext dsl;
+    @Override
+    public Field<Integer> getKeyField() {
+        return JBoard.BOARD.ID;
+    }
+
+    @Override
+    public TableImpl<JBoardRecord> getTable() {
+        return JBoard.BOARD;
+    }
 
     public long getTotalCountByContext(BoardSearchContext searchContext) {
-        return dsl.selectCount().from(BOARD)
+        return this.getDsl().selectCount().from(BOARD)
                 .where(this.createWhereConditions(searchContext))
                 .fetchOne(0, long.class);
     }
@@ -30,7 +38,7 @@ public class BoardRepository extends JOOQGenericDao<Board, JBoard> {
     public List<Board> getListByContext(BoardSearchContext searchContext) {
         Pageable pageable = searchContext.getPageRequest();
 
-        return dsl.selectFrom(BOARD)
+        return this.getDsl().selectFrom(BOARD)
                 .where(this.createWhereConditions(searchContext))
                 .orderBy(this.getSortFields(pageable.getSort()))
                 .limit(pageable.getPageSize())
