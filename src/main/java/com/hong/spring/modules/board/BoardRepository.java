@@ -39,8 +39,10 @@ public class BoardRepository {
         return dsl.selectFrom(BOARD)
                 .where(this.createWhereConditions(searchContext))
                 .orderBy(this.getSortFields(pageable.getSort()))
-                .limit(pageable.getPageSize()).offset(pageable.getOffset())
-                .fetch().into(Board.class);
+                .limit(pageable.getPageSize())
+                .offset(pageable.getOffset())
+                .fetch()
+                .into(Board.class);
     }
 
     private Collection<SortField<?>> getSortFields(Sort sortSpecification) {
