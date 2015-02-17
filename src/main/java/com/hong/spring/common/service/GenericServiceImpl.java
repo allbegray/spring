@@ -14,7 +14,7 @@ import com.hong.spring.common.dao.JOOQGenericDao;
 import com.hong.spring.common.util.GenericUtils;
 
 @SuppressWarnings("rawtypes")
-public class GenericServiceImpl<D extends JOOQGenericDao, P, T> implements GenericService<D, P, T> {
+public class GenericServiceImpl<D extends JOOQGenericDao, E, K> implements GenericService<D, E, K> {
 
 	@Autowired
 	private ApplicationContext applicationContext;
@@ -40,84 +40,84 @@ public class GenericServiceImpl<D extends JOOQGenericDao, P, T> implements Gener
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void insert(P entity) {
+	public void insert(E entity) {
 		dao.insert(entity);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void insert(P... objects) {
+	public void insert(E... objects) {
 		dao.insert(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void insert(Collection<P> objects) {
+	public void insert(Collection<E> objects) {
 		dao.insert(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void update(P entity) {
+	public void update(E entity) {
 		dao.update(entity);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void update(P... objects) {
+	public void update(E... objects) {
 		dao.update(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void update(Collection<P> objects) {
+	public void update(Collection<E> objects) {
 		dao.update(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void delete(P... objects) {
+	public void delete(E... objects) {
 		dao.delete(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void delete(Collection<P> objects) {
+	public void delete(Collection<E> objects) {
 		dao.delete(objects);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void deleteById(T... ids) {
+	public void deleteById(K... ids) {
 		dao.deleteById(ids);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public void deleteById(Collection<T> ids) {
+	public void deleteById(Collection<K> ids) {
 		dao.deleteById(ids);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public boolean exists(P object) {
+	public boolean exists(E object) {
 		return dao.exists(object);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public boolean existsById(T id) {
+	public boolean existsById(K id) {
 		return dao.existsById(id);
 	}
 
@@ -130,29 +130,29 @@ public class GenericServiceImpl<D extends JOOQGenericDao, P, T> implements Gener
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public List<P> findAll() {
+	public List<E> findAll() {
 		return dao.findAll();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public P findById(T id) {
-		return (P) dao.findById(id);
+	public E findById(K id) {
+		return (E) dao.findById(id);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public <Z> List<P> fetch(Field<Z> field, Z... values) {
+	public <Z> List<E> fetch(Field<Z> field, Z... values) {
 		return dao.fetch(field, values);
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional(readOnly = true)
-	public <Z> P fetchOne(Field<Z> field, Z value) {
-		return (P) dao.fetchOne(field, value);
+	public <Z> E fetchOne(Field<Z> field, Z value) {
+		return (E) dao.fetchOne(field, value);
 	}
 
 }

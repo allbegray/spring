@@ -7,49 +7,49 @@ import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
-public interface GenericDao<R extends TableRecord<R>, P, T> {
+public interface GenericDao<R extends TableRecord<R>, E, K> {
 
-	void insert(P entity);
-
-	@SuppressWarnings("unchecked")
-	void insert(P... objects);
-
-	void insert(Collection<P> objects);
-
-	void update(P entity);
+	void insert(E entity);
 
 	@SuppressWarnings("unchecked")
-	void update(P... objects);
+	void insert(E... objects);
 
-	void update(Collection<P> objects);
+	void insert(Collection<E> objects);
 
-	@SuppressWarnings("unchecked")
-	void delete(P... objects);
-
-	void delete(Collection<P> objects);
+	void update(E entity);
 
 	@SuppressWarnings("unchecked")
-	void deleteById(T... ids);
+	void update(E... objects);
 
-	void deleteById(Collection<T> ids);
+	void update(Collection<E> objects);
 
-	boolean exists(P object);
+	@SuppressWarnings("unchecked")
+	void delete(E... objects);
 
-	boolean existsById(T id);
+	void delete(Collection<E> objects);
+
+	@SuppressWarnings("unchecked")
+	void deleteById(K... ids);
+
+	void deleteById(Collection<K> ids);
+
+	boolean exists(E object);
+
+	boolean existsById(K id);
 
 	long count();
 
-	List<P> findAll();
+	List<E> findAll();
 
-	P findById(T id);
+	E findById(K id);
 
 	@SuppressWarnings("unchecked")
-	<Z> List<P> fetch(Field<Z> field, Z... values);
+	<Z> List<E> fetch(Field<Z> field, Z... values);
 
-	<Z> P fetchOne(Field<Z> field, Z value);
+	<Z> E fetchOne(Field<Z> field, Z value);
 
 	Table<R> getTable();
 
-	Class<P> getType();
+	Class<E> getType();
 
 }

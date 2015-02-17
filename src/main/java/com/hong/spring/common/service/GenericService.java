@@ -5,45 +5,45 @@ import java.util.List;
 
 import org.jooq.Field;
 
-public interface GenericService<D, P, T> {
+public interface GenericService<D, E, K> {
 	
-	void insert(P entity);
+	void insert(E entity);
 
 	@SuppressWarnings("unchecked")
-	void insert(P... objects);
+	void insert(E... objects);
 
-	void insert(Collection<P> objects);
+	void insert(Collection<E> objects);
 
-	void update(P entity);
-
-	@SuppressWarnings("unchecked")
-	void update(P... objects);
-
-	void update(Collection<P> objects);
+	void update(E entity);
 
 	@SuppressWarnings("unchecked")
-	void delete(P... objects);
+	void update(E... objects);
 
-	void delete(Collection<P> objects);
+	void update(Collection<E> objects);
 
 	@SuppressWarnings("unchecked")
-	void deleteById(T... ids);
+	void delete(E... objects);
 
-	void deleteById(Collection<T> ids);
+	void delete(Collection<E> objects);
 
-	boolean exists(P object);
+	@SuppressWarnings("unchecked")
+	void deleteById(K... ids);
 
-	boolean existsById(T id);
+	void deleteById(Collection<K> ids);
+
+	boolean exists(E object);
+
+	boolean existsById(K id);
 
 	long count();
 
-	List<P> findAll();
+	List<E> findAll();
 
-	P findById(T id);
+	E findById(K id);
 
 	@SuppressWarnings("unchecked")
-	<Z> List<P> fetch(Field<Z> field, Z... values);
+	<Z> List<E> fetch(Field<Z> field, Z... values);
 
-	<Z> P fetchOne(Field<Z> field, Z value);
+	<Z> E fetchOne(Field<Z> field, Z value);
 
 }

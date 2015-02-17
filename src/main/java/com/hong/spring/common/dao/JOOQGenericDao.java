@@ -23,10 +23,10 @@ import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Sort;
 
 @SuppressWarnings("rawtypes")
-public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> implements GenericDao<R, P, T> {
+public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> implements GenericDao<R, E, K> {
 
 	private final Table<R> table;
-	private final Class<P> type;
+	private final Class<E> type;
 
 	@Autowired
 	private DSLContext dsl;
@@ -35,24 +35,24 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 		return dsl;
 	}
 
-	protected JOOQGenericDao(Table<R> table, Class<P> type) {
+	protected JOOQGenericDao(Table<R> table, Class<E> type) {
 		this.table = table;
 		this.type = type;
 	}
 
 	@Override
-	public final void insert(P object) {
+	public final void insert(E object) {
 		insert(singletonList(object));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final void insert(P... objects) {
+	public final void insert(E... objects) {
 		insert(asList(objects));
 	}
 
 	@Override
-	public final void insert(Collection<P> objects) {
+	public final void insert(Collection<E> objects) {
 
 		if (objects.size() > 1) {
 			dsl.batchInsert(records(objects, false)).execute();
@@ -62,18 +62,18 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 	}
 
 	@Override
-	public final void update(P object) {
+	public final void update(E object) {
 		update(singletonList(object));
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final void update(P... objects) {
+	public final void update(E... objects) {
 		update(asList(objects));
 	}
 
 	@Override
-	public final void update(Collection<P> objects) {
+	public final void update(Collection<E> objects) {
 
 		if (objects.size() > 1) {
 			dsl.batchUpdate(records(objects, true)).execute();
@@ -84,15 +84,15 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final void delete(P... objects) {
+	public final void delete(E... objects) {
 		delete(asList(objects));
 	}
 
 	@Override
-	public final void delete(Collection<P> objects) {
-		List<T> ids = new ArrayList<T>();
+	public final void delete(Collection<E> objects) {
+		List<K> ids = new ArrayList<K>();
 
-		for (P object : objects) {
+		for (E object : objects) {
 			ids.add(getId(object));
 		}
 
@@ -101,12 +101,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final void deleteById(T... ids) {
+	public final void deleteById(K... ids) {
 		deleteById(asList(ids));
 	}
 
 	@Override
-	public final void deleteById(Collection<T> ids) {
+	public final void deleteById(Collection<K> ids) {
 		Field<?>[] pk = pk();
 
 		if (pk != null) {
@@ -115,12 +115,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 	}
 
 	@Override
-	public final boolean exists(P object) {
+	public final boolean exists(E object) {
 		return existsById(getId(object));
 	}
 
 	@Override
-	public final boolean existsById(T id) {
+	public final boolean existsById(K id) {
 		Field<?>[] pk = pk();
 
 		if (pk != null) {
@@ -136,12 +136,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 	}
 
 	@Override
-	public final List<P> findAll() {
+	public final List<E> findAll() {
 		return dsl.selectFrom(table).fetch().into(type);
 	}
 
 	@Override
-	public final P findById(T id) {
+	public final E findById(K id) {
 		Field<?>[] pk = pk();
 		R record = null;
 
@@ -154,12 +154,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public final <Z> List<P> fetch(Field<Z> field, Z... values) {
+	public final <Z> List<E> fetch(Field<Z> field, Z... values) {
 		return dsl.selectFrom(table).where(field.in(values)).fetch().into(type);
 	}
 
 	@Override
-	public final <Z> P fetchOne(Field<Z> field, Z value) {
+	public final <Z> E fetchOne(Field<Z> field, Z value) {
 		R record = dsl.selectFrom(table).where(field.equal(value)).fetchOne();
 
 		return record == null ? null : record.into(type);
@@ -171,14 +171,14 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 	}
 
 	@Override
-	public final Class<P> getType() {
+	public final Class<E> getType() {
 		return type;
 	}
 
-	protected abstract T getId(P object);
+	protected abstract K getId(E object);
 
 	@SuppressWarnings("unchecked")
-	protected final T compositeKeyRecord(Object... values) {
+	protected final K compositeKeyRecord(Object... values) {
 		UniqueKey<R> key = table.getPrimaryKey();
 		if (key == null)
 			return null;
@@ -190,11 +190,11 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 			result.setValue(fields[i], fields[i].getDataType().convert(values[i]));
 		}
 
-		return (T) result;
+		return (K) result;
 	}
 
 	@SuppressWarnings("unchecked")
-	private final Condition equal(Field<?>[] pk, T id) {
+	private final Condition equal(Field<?>[] pk, K id) {
 		if (pk.length == 1) {
 			return ((Field<Object>) pk[0]).equal(pk[0].getDataType().convert(id));
 		} else {
@@ -203,7 +203,7 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 	}
 
 	@SuppressWarnings("unchecked")
-	private final Condition equal(Field<?>[] pk, Collection<T> ids) {
+	private final Condition equal(Field<?>[] pk, Collection<K> ids) {
 		if (pk.length == 1) {
 			if (ids.size() == 1) {
 				return equal(pk, ids.iterator().next());
@@ -220,11 +220,11 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, P, T> impleme
 		return key == null ? null : key.getFieldsArray();
 	}
 
-	private final List<R> records(Collection<P> objects, boolean forUpdate) {
+	private final List<R> records(Collection<E> objects, boolean forUpdate) {
 		List<R> result = new ArrayList<R>();
 		Field<?>[] pk = pk();
 
-		for (P object : objects) {
+		for (E object : objects) {
 			R record = dsl.newRecord(table, object);
 
 			if (forUpdate && pk != null)
