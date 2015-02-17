@@ -5,14 +5,14 @@ import org.sitemesh.config.ConfigurableSiteMeshFilter;
 
 public class MyConfigurableSiteMeshFilter extends ConfigurableSiteMeshFilter {
 
-    @Override
-    protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
-        builder.addExcludedPath("/css/*");
-        builder.addExcludedPath("/img/*");
-        builder.addExcludedPath("/js/*");
-        builder.addExcludedPath("/lib/*");
+	@Override
+	protected void applyCustomConfiguration(SiteMeshFilterBuilder builder) {
+		builder.addExcludedPath("/css/*");
+		builder.addExcludedPath("/img/*");
+		builder.addExcludedPath("/js/*");
+		builder.addExcludedPath("/lib/*");
 
-        builder.addDecoratorPath("/*", "/WEB-INF/decorators/default.jsp");
-    }
+		builder.addDecoratorPath("/*", "/WEB-INF/decorators/default.jsp");
+	}
 
 }

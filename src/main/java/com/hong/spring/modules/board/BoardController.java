@@ -7,8 +7,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping("/board")
 public class BoardController {
 
-    @RequestMapping("/index")
-    public void index() {
-    }
+	@RequestMapping("/index")
+	public void index() {
+	}
 
 }

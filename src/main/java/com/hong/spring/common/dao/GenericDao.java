@@ -1,50 +1,55 @@
 package com.hong.spring.common.dao;
 
+import java.util.Collection;
+import java.util.List;
+
 import org.jooq.Field;
 import org.jooq.Table;
 import org.jooq.TableRecord;
 
-import java.util.Collection;
-import java.util.List;
-
 public interface GenericDao<R extends TableRecord<R>, P, T> {
 
-    void insert(P entity);
+	void insert(P entity);
 
-    void insert(P... objects);
+	@SuppressWarnings("unchecked")
+	void insert(P... objects);
 
-    void insert(Collection<P> objects);
+	void insert(Collection<P> objects);
 
-    void update(P entity);
+	void update(P entity);
 
-    void update(P... objects);
+	@SuppressWarnings("unchecked")
+	void update(P... objects);
 
-    void update(Collection<P> objects);
+	void update(Collection<P> objects);
 
-    void delete(P... objects);
+	@SuppressWarnings("unchecked")
+	void delete(P... objects);
 
-    void delete(Collection<P> objects);
+	void delete(Collection<P> objects);
 
-    void deleteById(T... ids);
+	@SuppressWarnings("unchecked")
+	void deleteById(T... ids);
 
-    void deleteById(Collection<T> ids);
+	void deleteById(Collection<T> ids);
 
-    boolean exists(P object);
+	boolean exists(P object);
 
-    boolean existsById(T id);
+	boolean existsById(T id);
 
-    long count();
+	long count();
 
-    List<P> findAll();
+	List<P> findAll();
 
-    P findById(T id);
+	P findById(T id);
 
-    <Z> List<P> fetch(Field<Z> field, Z... values);
+	@SuppressWarnings("unchecked")
+	<Z> List<P> fetch(Field<Z> field, Z... values);
 
-    <Z> P fetchOne(Field<Z> field, Z value);
+	<Z> P fetchOne(Field<Z> field, Z value);
 
-    Table<R> getTable();
+	Table<R> getTable();
 
-    Class<P> getType();
+	Class<P> getType();
 
 }

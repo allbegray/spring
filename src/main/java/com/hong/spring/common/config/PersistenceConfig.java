@@ -1,13 +1,14 @@
 package com.hong.spring.common.config;
 
-import com.hong.spring.common.config.jooq.JOOQToSpringExceptionTransformer;
+import org.jooq.ConnectionProvider;
+import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
+import org.jooq.TransactionProvider;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
 import org.jooq.impl.DefaultExecuteListenerProvider;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.env.Environment;
@@ -23,78 +24,85 @@ import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
+import com.hong.spring.common.config.jooq.JOOQToSpringExceptionTransformer;
+import com.hong.spring.common.config.jooq.SpringTransactionProvider;
+
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
 public class PersistenceConfig {
 
-    @Autowired
-    private Environment env;
+	@Autowired
+	private Environment env;
+	
+	@Bean(destroyMethod = "shutdown")
+	public EmbeddedDatabase dataSource() {
+		return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
+	}
 
-    @Bean
-    public JOOQToSpringExceptionTransformer jooqToSpringExceptionTransformer() {
-        return new JOOQToSpringExceptionTransformer();
-    }
+	@Bean
+	public DataSourceInitializer dataSourceInitializer() {
+		DataSourceInitializer initializer = new DataSourceInitializer();
+		initializer.setDataSource(dataSource());
+		initializer.setDatabasePopulator(databasePopulator());
+		return initializer;
+	}
 
-    @Bean
-    public DefaultConfiguration configuration() {
-        DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
+	private DatabasePopulator databasePopulator() {
+		ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
+		populator.setSqlScriptEncoding("UTF-8");
+		populator.setIgnoreFailedDrops(true);
+		populator.addScript(new ClassPathResource(env.getProperty("db.schema.script")));
+		return populator;
+	}
 
-        jooqConfiguration.set(connectionProvider());
-        jooqConfiguration.set(new DefaultExecuteListenerProvider(
-                jooqToSpringExceptionTransformer()
-        ));
+	@Bean
+	public LazyConnectionDataSourceProxy lazyConnectionDataSource() {
+		return new LazyConnectionDataSourceProxy(dataSource());
+	}
 
-        String sqlDialectName = env.getRequiredProperty("jooq.sql.dialect");
-        SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
-        jooqConfiguration.set(dialect);
+	@Bean
+	public TransactionAwareDataSourceProxy transactionAwareDataSource() {
+		return new TransactionAwareDataSourceProxy(lazyConnectionDataSource());
+	}
 
-        return jooqConfiguration;
-    }
+	@Bean
+	public DataSourceTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(lazyConnectionDataSource());
+	}
 
-    @Bean
-    public DefaultDSLContext dsl() {
-        return new DefaultDSLContext(configuration());
-    }
+	@Bean
+	public ConnectionProvider connectionProvider() {
+		return new DataSourceConnectionProvider(transactionAwareDataSource());
+	}
 
-    @Bean
-    public LazyConnectionDataSourceProxy lazyConnectionDataSource() {
-        return new LazyConnectionDataSourceProxy(dataSource());
-    }
+	@Bean
+	public ExecuteListener jooqToSpringExceptionTransformer() {
+		return new JOOQToSpringExceptionTransformer();
+	}
+	
+	@Bean
+	public TransactionProvider transactionProvider() {
+		return new SpringTransactionProvider();
+	}
 
-    @Bean
-    public TransactionAwareDataSourceProxy transactionAwareDataSource() {
-        return new TransactionAwareDataSourceProxy(lazyConnectionDataSource());
-    }
+	@Bean
+	public DefaultConfiguration configuration() {
+		DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
 
-    @Bean
-    public DataSourceTransactionManager transactionManager() {
-        return new DataSourceTransactionManager(lazyConnectionDataSource());
-    }
+		jooqConfiguration.setConnectionProvider(connectionProvider());
+		jooqConfiguration.setTransactionProvider(transactionProvider());
+		jooqConfiguration.setExecuteListenerProvider(new DefaultExecuteListenerProvider(jooqToSpringExceptionTransformer()));
 
-    @Bean
-    public DataSourceConnectionProvider connectionProvider() {
-        return new DataSourceConnectionProvider(transactionAwareDataSource());
-    }
+		String sqlDialectName = env.getRequiredProperty("jooq.sql.dialect");
+		SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);
+		jooqConfiguration.setSQLDialect(dialect);
 
-    @Bean(destroyMethod = "shutdown")
-    public EmbeddedDatabase dataSource() {
-        return new EmbeddedDatabaseBuilder().setType(EmbeddedDatabaseType.H2).build();
-    }
+		return jooqConfiguration;
+	}
 
-    @Bean
-    public DataSourceInitializer dataSourceInitializer() {
-        DataSourceInitializer initializer = new DataSourceInitializer();
-        initializer.setDataSource(dataSource());
-        initializer.setDatabasePopulator(databasePopulator());
-        return initializer;
-    }
-
-    private DatabasePopulator databasePopulator() {
-        ResourceDatabasePopulator populator = new ResourceDatabasePopulator();
-        populator.setSqlScriptEncoding("UTF-8");
-        populator.setIgnoreFailedDrops(true);
-        populator.addScript(new ClassPathResource(env.getProperty("db.schema.script")));
-        return populator;
-    }
+	@Bean
+	public DefaultDSLContext dsl() {
+		return new DefaultDSLContext(configuration());
+	}
 
 }
