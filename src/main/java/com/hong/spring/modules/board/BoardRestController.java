@@ -24,7 +24,7 @@ public class BoardRestController {
 	}
 
 	@RequestMapping("/{id}")
-	public AjaxReturn get(@PathVariable("id") int id) {
+	public AjaxReturn get(@PathVariable("id") long id) {
 		Board board = boardService.findById(id);
 		return AjaxReturn.jsonWithSuccessResult().addAttribute("board", board);
 	}
