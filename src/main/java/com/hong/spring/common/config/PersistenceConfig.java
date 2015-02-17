@@ -1,9 +1,7 @@
 package com.hong.spring.common.config;
 
-import org.jooq.ConnectionProvider;
 import org.jooq.ExecuteListener;
 import org.jooq.SQLDialect;
-import org.jooq.TransactionProvider;
 import org.jooq.impl.DataSourceConnectionProvider;
 import org.jooq.impl.DefaultConfiguration;
 import org.jooq.impl.DefaultDSLContext;
@@ -24,8 +22,7 @@ import org.springframework.jdbc.datasource.init.DatabasePopulator;
 import org.springframework.jdbc.datasource.init.ResourceDatabasePopulator;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
-import com.hong.spring.common.config.jooq.JOOQToSpringExceptionTransformer;
-import com.hong.spring.common.config.jooq.SpringTransactionProvider;
+import com.hong.spring.common.config.jooq.ExceptionTransformer;
 
 @Configuration
 @EnableTransactionManagement(proxyTargetClass = true)
@@ -61,28 +58,23 @@ public class PersistenceConfig {
 	}
 
 	@Bean
+	public DataSourceTransactionManager transactionManager() {
+		return new DataSourceTransactionManager(lazyConnectionDataSource());
+	}
+	
+	@Bean
 	public TransactionAwareDataSourceProxy transactionAwareDataSource() {
 		return new TransactionAwareDataSourceProxy(lazyConnectionDataSource());
 	}
 
 	@Bean
-	public DataSourceTransactionManager transactionManager() {
-		return new DataSourceTransactionManager(lazyConnectionDataSource());
-	}
-
-	@Bean
-	public ConnectionProvider connectionProvider() {
+	public DataSourceConnectionProvider connectionProvider() {
 		return new DataSourceConnectionProvider(transactionAwareDataSource());
 	}
 
 	@Bean
-	public ExecuteListener jooqToSpringExceptionTransformer() {
-		return new JOOQToSpringExceptionTransformer();
-	}
-	
-	@Bean
-	public TransactionProvider transactionProvider() {
-		return new SpringTransactionProvider();
+	public ExecuteListener exceptionTranslator() {
+		return new ExceptionTransformer();
 	}
 
 	@Bean
@@ -90,8 +82,7 @@ public class PersistenceConfig {
 		DefaultConfiguration jooqConfiguration = new DefaultConfiguration();
 
 		jooqConfiguration.setConnectionProvider(connectionProvider());
-		jooqConfiguration.setTransactionProvider(transactionProvider());
-		jooqConfiguration.setExecuteListenerProvider(new DefaultExecuteListenerProvider(jooqToSpringExceptionTransformer()));
+		jooqConfiguration.setExecuteListenerProvider(new DefaultExecuteListenerProvider(exceptionTranslator()));
 
 		String sqlDialectName = env.getRequiredProperty("jooq.sql.dialect");
 		SQLDialect dialect = SQLDialect.valueOf(sqlDialectName);

@@ -17,12 +17,6 @@ public class BoardRestController {
 	@Autowired
 	private BoardService boardService;
 	
-	@RequestMapping("/tx")
-	public AjaxReturn tx() {
-		boardService.testTx();
-		return AjaxReturn.jsonWithSuccessResult();
-	}
-	
 	@RequestMapping("/add")
 	public AjaxReturn add(Board board) {
 		boardService.insert(board);

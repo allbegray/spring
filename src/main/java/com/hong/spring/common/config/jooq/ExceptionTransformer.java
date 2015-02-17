@@ -7,7 +7,7 @@ import org.springframework.jdbc.support.SQLErrorCodeSQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLExceptionTranslator;
 import org.springframework.jdbc.support.SQLStateSQLExceptionTranslator;
 
-public class JOOQToSpringExceptionTransformer extends DefaultExecuteListener {
+public class ExceptionTransformer extends DefaultExecuteListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -15,7 +15,7 @@ public class JOOQToSpringExceptionTransformer extends DefaultExecuteListener {
 	public void exception(ExecuteContext ctx) {
 		SQLDialect dialect = ctx.configuration().dialect();
 		SQLExceptionTranslator translator = (dialect != null) ? new SQLErrorCodeSQLExceptionTranslator(dialect.name()) : new SQLStateSQLExceptionTranslator();
-
 		ctx.exception(translator.translate("jOOQ", ctx.sql(), ctx.sqlException()));
 	}
+	
 }

@@ -1,6 +1,5 @@
 package com.hong.spring.modules.board;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,20 +32,6 @@ public class BoardService {
 		long totalCount = boardRepository.getTotalCountByContext(searchContext);
 		List<Board> boardList = boardRepository.getListByContext(searchContext);
 		return new PageImpl<>(boardList, searchContext.getPageRequest(), totalCount);
-	}
-
-	@Transactional
-	public void testTx() {
-		for (int i = 0; i < 10; i++) {
-			if (i == 7) {
-				throw new RuntimeException("트랜잭션 테스트 익셉션");
-			}
-			Board board = new Board();
-			board.setTitle("트랜잭션 제목" + i);
-			board.setDesc("트랜잭션내용" + i);
-			board.setCreateDt(new Date());
-			this.insert(board);
-		}
 	}
 
 }

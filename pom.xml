@@ -102,6 +102,12 @@
             <artifactId>spring-webmvc</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework</groupId>
@@ -351,6 +357,10 @@
                             <excludes>schema_version</excludes>
                             <inputSchema>PUBLIC</inputSchema>
                         </database>
+                        <!-- <generate>
+                        	<instanceFields>true</instanceFields>
+							<pojos>true</pojos>
+                        </generate> -->
                         <target>
                             <packageName>org.jooq</packageName>
                             <directory>target/generated-sources/jooq</directory>
