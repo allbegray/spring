@@ -139,6 +139,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 		return type;
 	}
 
+	/**
+	 * FIXME : 상속받은 repository 에서 도메인 id 를 가져오도록 하는건 아름답지 못하다...
+	 * 
+	 * @param object
+	 * @return
+	 */
 	protected abstract K getId(E object);
 
 	@SuppressWarnings("unchecked")
