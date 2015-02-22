@@ -8,6 +8,7 @@ import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatche
 
 import com.hong.spring.common.config.PersistenceConfig;
 import com.hong.spring.common.config.RootConfig;
+import com.hong.spring.common.config.SecurityConfig;
 import com.hong.spring.common.config.WebMvcConfig;
 import com.hong.spring.common.config.sitemesh.MyConfigurableSiteMeshFilter;
 
@@ -15,7 +16,7 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 
 	@Override
 	protected Class<?>[] getRootConfigClasses() {
-		return new Class<?>[] { RootConfig.class, PersistenceConfig.class, WebMvcConfig.class };
+		return new Class<?>[] { RootConfig.class, SecurityConfig.class, PersistenceConfig.class, WebMvcConfig.class };
 	}
 
 	@Override

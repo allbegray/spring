@@ -9,9 +9,12 @@
 
 	<logger name="com.hong.spring" level="DEBUG" />
 
-	<logger name="org.springframework.jdbc" level="DEBUG" />
-	<logger name="org.springframework.tx" level="DEBUG" />
+	<logger name="org.springframework.jdbc" level="WARN" />
+	<logger name="org.springframework.tx" level="WARN" />
+	
+	<logger name="org.springframework.beans" level="INFO" />
 	<logger name="org.springframework.web.servlet" level="INFO" />
+	<logger name="org.springframework.security" level="INFO" />
 
 	<root level="DEBUG">
 		<appender-ref ref="console" />

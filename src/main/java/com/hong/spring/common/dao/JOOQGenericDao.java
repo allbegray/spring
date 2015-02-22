@@ -1,7 +1,5 @@
 package com.hong.spring.common.dao;
 
-import static java.util.Arrays.asList;
-import static java.util.Collections.singletonList;
 import static org.jooq.impl.DSL.row;
 
 import java.util.ArrayList;
@@ -41,17 +39,6 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 	}
 
 	@Override
-	public final void insert(E object) {
-		insert(singletonList(object));
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public final void insert(E... objects) {
-		insert(asList(objects));
-	}
-
-	@Override
 	public final void insert(Collection<E> objects) {
 
 		if (objects.size() > 1) {
@@ -59,17 +46,6 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 		} else if (objects.size() == 1) {
 			records(objects, false).get(0).insert();
 		}
-	}
-
-	@Override
-	public final void update(E object) {
-		update(singletonList(object));
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public final void update(E... objects) {
-		update(asList(objects));
 	}
 
 	@Override
@@ -82,12 +58,6 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 		}
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public final void delete(E... objects) {
-		delete(asList(objects));
-	}
-
 	@Override
 	public final void delete(Collection<E> objects) {
 		List<K> ids = new ArrayList<K>();
@@ -97,12 +67,6 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 		}
 
 		deleteById(ids);
-	}
-
-	@SuppressWarnings("unchecked")
-	@Override
-	public final void deleteById(K... ids) {
-		deleteById(asList(ids));
 	}
 
 	@Override
