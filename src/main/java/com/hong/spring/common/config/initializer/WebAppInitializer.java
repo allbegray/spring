@@ -1,6 +1,7 @@
 package com.hong.spring.common.config.initializer;
 
 import javax.servlet.Filter;
+import javax.servlet.ServletRegistration.Dynamic;
 
 import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.filter.HiddenHttpMethodFilter;
@@ -35,6 +36,11 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 		encodingFilter.setEncoding("UTF-8");
 		encodingFilter.setForceEncoding(true);
 		return new Filter[] { encodingFilter, new HiddenHttpMethodFilter(), new MyConfigurableSiteMeshFilter() };
+	}
+
+	@Override
+	protected void customizeRegistration(Dynamic registration) {
+//		registration.setInitParameter("throwExceptionIfNoHandlerFound", "true");
 	}
 
 }

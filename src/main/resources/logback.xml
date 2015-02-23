@@ -12,6 +12,7 @@
 	<logger name="org.springframework.jdbc" level="WARN" />
 	<logger name="org.springframework.tx" level="WARN" />
 	
+	<logger name="org.springframework.core" level="INFO" />
 	<logger name="org.springframework.beans" level="INFO" />
 	<logger name="org.springframework.web.servlet" level="INFO" />
 	<logger name="org.springframework.security" level="INFO" />
