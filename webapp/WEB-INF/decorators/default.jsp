@@ -12,6 +12,8 @@
     <script type="text/javascript" src="<c:url value="/lib/jquery-ui/jquery-ui.min.js"/>" ></script>
     <script type="text/javascript" src="<c:url value="/lib/jqGrid/js/i18n/grid.locale-kr.js"/>" ></script>
     <script type="text/javascript" src="<c:url value="/lib/jqGrid/js/jquery.jqGrid.min.js"/>" ></script>
+    
+    <script type="text/javascript" src="<c:url value="/js/jquery-common.js"/>" ></script>
 
     <sitemesh:write property='head'/>
 </head>
