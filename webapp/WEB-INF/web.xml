@@ -3,10 +3,6 @@
 	version="3.0"
 	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
 	metadata-complete="false">
-
-	<session-config>
-		<session-timeout>30</session-timeout>
-	</session-config>
 	
 	<error-page>
 		<error-code>404</error-code>

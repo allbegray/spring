@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hong.spring.common.util.AjaxReturn;
+import com.hong.spring.common.web.support.AjaxReturn;
 import com.hong.spring.domains.Board;
 import com.hong.spring.modules.board.support.BoardSearchContext;
 
