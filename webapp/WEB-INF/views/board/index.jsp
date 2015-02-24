@@ -82,9 +82,18 @@
         function selectRow() {
             jQuery('#jqGrid').jqGrid('setSelection', '1');
         }
+        
+        function ajaxStatusCodeTest() {
+        	$.ajax({
+       			type: "get",
+       			url: "/testsetsetset",
+       			dataType: "json"
+       		}); 
+        }
     </script>
 </head>
 <body>
+	<button type="button" onclick="ajaxStatusCodeTest();">ajax status code 테스트</button>
 
     <div>
         <select id="select_type">
