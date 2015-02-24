@@ -63,10 +63,13 @@
                     $('#log').prepend('그리드 그리기 완료<br/><br/>');
                 },
 
+                loadError : ajaxErrorHandler
+                /*
                 loadError: function(xhr, status, error) {
-                    $('#log').prepend('HTTP status code: ' + jqXHR.status + ' ' + 'textStatus: ' + textStatus + ' ' + 'errorThrown: ' + errorThrown + '<br/>');
-                    $('#log').prepend('HTTP message body (jqXHR.responseText): ' + jqXHR.responseText + "<br/><br/>");
+                    $('#log').prepend('HTTP status code: ' + xhr.status + ' ' + 'textStatus: ' + status + ' ' + 'errorThrown: ' + error + '<br/>');
+                    $('#log').prepend('HTTP message body (jqXHR.responseText): ' + xhr.responseText + "<br/><br/>");
                 }
+                */
 
             });
 
