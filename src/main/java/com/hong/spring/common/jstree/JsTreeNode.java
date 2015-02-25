@@ -1,5 +1,6 @@
 package com.hong.spring.common.jstree;
 
+import java.io.Serializable;
 import java.util.List;
 
 import org.apache.commons.lang3.builder.ToStringBuilder;
@@ -11,18 +12,45 @@ import com.hong.spring.common.serializer.JsTreeStateSerializer;
 
 public class JsTreeNode {
 
-	private String data;
+	private String name;
 	private JsTreeState state = JsTreeState.CLOSED;
 	private List<JsTreeNode> children;
 	private JsTreeAttributes attributes;
 
-	public String getData() {
-		return data;
+	public JsTreeNode() {
+	}
+	
+	public JsTreeNode(String name, String id, String parentId) {
+		this(name, id, parentId, null);
+	}
+	
+	public JsTreeNode(String name, String id, String parentId, String type) {
+		this.setName(name);
+		this.setId(id);
+		this.setParentId(parentId);
+		this.setType(type);
 	}
 
-	public void setData(String data) {
-		this.data = data;
-		this.getAttributes().setName(data);
+	@JsonProperty("data")
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+		this.getAttributes().setName(name);
+	}
+	
+	public void setId(Serializable id) {
+		this.getAttributes().setId(id);
+	}
+	
+	public void setParentId(Serializable parentId) {
+		this.getAttributes().setParentId(parentId);
+	}
+	
+	public void setType(String type) {
+		this.getAttributes().setType(type);
 	}
 
 	@JsonSerialize(using = JsTreeStateSerializer.class)
