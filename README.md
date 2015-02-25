@@ -2,12 +2,12 @@
 
 clean flyway:clean flyway:migrate generate-sources
 
-# 2. Javascript Component 빌드
+# 2. Bower 빌드
 
 ##2.1. nodejs 설치
 http://nodejs.org/
 
-##2.2. bpm 으로 bower, grunt 패키지 설치
+##2.2. npm 으로 bower, grunt 패키지 설치
 npm install -g bower  
 npm install -g bower-installer  
 npm install -g grunt-cli  
