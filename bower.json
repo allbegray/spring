@@ -1,0 +1,17 @@
+{
+  "name": "spring",
+  "version": "1.0-SNAPSHOT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "jquery": "2.1.3",
+	"jqgrid": "4.7.1",
+	"jquery-ui": "1.11.3",
+	"font-awesome": "4.3.0"
+  }
+}
