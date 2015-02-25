@@ -14,12 +14,9 @@ import javax.servlet.http.HttpServletResponse;
 import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.core.AuthenticationException;
 
-public class AjaxSessionTimeoutFilter implements Filter {
+import com.hong.spring.common.util.AjaxUtils;
 
-	private boolean isAjaxRequest(HttpServletRequest request) {
-		String requestedWith = request.getHeader("X-Requested-With");
-		return requestedWith != null ? "XMLHttpRequest".equals(requestedWith) : false;
-	}
+public class AjaxSessionTimeoutFilter implements Filter {
 
 	@Override
 	public void init(FilterConfig filterConfig) throws ServletException {
@@ -29,7 +26,7 @@ public class AjaxSessionTimeoutFilter implements Filter {
 	public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
 		HttpServletRequest req = (HttpServletRequest) request;
 		HttpServletResponse res = (HttpServletResponse) response;
-		if (isAjaxRequest(req)) {
+		if (AjaxUtils.isAjaxRequest(req)) {
 			try {
 				chain.doFilter(req, res);
 			} catch (AccessDeniedException e) {
