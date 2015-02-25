@@ -83,7 +83,7 @@
         });
 
         function selectRow() {
-            jQuery('#jqGrid').jqGrid('setSelection', '1');
+            jQuery('#jqGrid').jqGrid('setSelection', '75');
         }
         
         function ajaxStatusCodeTest() {
@@ -112,7 +112,7 @@
     <table id="jqGrid"></table>
     <div id="jqGridPager"></div>
 
-    <button type="button" onclick="selectRow();">키1 로 로우 선택</button>
+    <button type="button" onclick="selectRow();">키75 로 로우 선택</button>
 
     <div id="log"></div>
 </body>

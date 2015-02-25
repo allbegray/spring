@@ -50,7 +50,10 @@ public class BoardRepository extends JOOQGenericDao<JBoardRecord, Board, Long> {
 			if ("title".equals(searchContext.getSelect_type())) {
 				where = BOARD.TITLE.likeIgnoreCase("%" + searchContext.getKeyword() + "%");
 			} else if ("desc".equals(searchContext.getSelect_type())) {
-				where = BOARD.TITLE.likeIgnoreCase("%" + searchContext.getKeyword() + "%");
+				where = BOARD.DESC.likeIgnoreCase("%" + searchContext.getKeyword() + "%");
+			} else {
+				where = BOARD.TITLE.likeIgnoreCase("%" + searchContext.getKeyword() + "%")
+						.or(BOARD.DESC.likeIgnoreCase("%" + searchContext.getKeyword() + "%"));
 			}
 		}
 		return where;
