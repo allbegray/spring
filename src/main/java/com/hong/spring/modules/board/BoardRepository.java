@@ -47,13 +47,14 @@ public class BoardRepository extends JOOQGenericDao<JBoardRecord, Board, Long> {
 	private Condition createWhereConditions(BoardSearchContext searchContext) {
 		Condition where = null;
 		if (StringUtils.hasText(searchContext.getKeyword())) {
+			String likeQuery = "%" + searchContext.getKeyword() + "%";
+			
 			if ("title".equals(searchContext.getSelect_type())) {
-				where = BOARD.TITLE.likeIgnoreCase("%" + searchContext.getKeyword() + "%");
+				where = BOARD.TITLE.likeIgnoreCase(likeQuery);
 			} else if ("desc".equals(searchContext.getSelect_type())) {
-				where = BOARD.DESC.likeIgnoreCase("%" + searchContext.getKeyword() + "%");
+				where = BOARD.DESC.likeIgnoreCase(likeQuery);
 			} else {
-				where = BOARD.TITLE.likeIgnoreCase("%" + searchContext.getKeyword() + "%")
-						.or(BOARD.DESC.likeIgnoreCase("%" + searchContext.getKeyword() + "%"));
+				where = BOARD.TITLE.likeIgnoreCase(likeQuery).or(BOARD.DESC.likeIgnoreCase(likeQuery));
 			}
 		}
 		return where;
