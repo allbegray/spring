@@ -18,11 +18,11 @@
 		"base":  "webapp/lib/",
 		"path" : {
 			"js": "{name}",
-            "css": "{name}/css",
-            "eot": "{name}/fonts",
-            "svg": "{name}/fonts",
-            "ttf": "{name}/fonts",
-            "woff": "{name}/fonts",
+			"css": "{name}/css",
+			"eot": "{name}/fonts",
+			"svg": "{name}/fonts",
+			"ttf": "{name}/fonts",
+			"woff": "{name}/fonts",
 			"otf" : "{name}/fonts",
 			"woff2" : "{name}/fonts"
 		},
