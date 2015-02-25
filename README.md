@@ -4,6 +4,8 @@ clean flyway:clean flyway:migrate generate-sources
 
 # 2. Bower 빌드
 
+*빌드 된거 webapp/lib 에 업로드 다 해두었으니 필수는 아님*
+
 ##2.1. nodejs 설치
 http://nodejs.org/
 
