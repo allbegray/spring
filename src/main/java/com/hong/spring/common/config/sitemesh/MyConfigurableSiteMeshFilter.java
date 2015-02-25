@@ -11,6 +11,8 @@ public class MyConfigurableSiteMeshFilter extends ConfigurableSiteMeshFilter {
 		builder.addExcludedPath("/img/*");
 		builder.addExcludedPath("/js/*");
 		builder.addExcludedPath("/lib/*");
+		
+		builder.addExcludedPath("/file/ckeditor/upload");
 
 		builder.addDecoratorPath("/*", "/WEB-INF/decorators/default.jsp");
 	}
