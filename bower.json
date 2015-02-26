@@ -14,7 +14,8 @@
 		"jquery-ui": "1.11.3",
 		"font-awesome": "4.3.0",
 		"moment" : "2.9.0",
-		"handlebars" : "3.0.0"
+		"handlebars" : "3.0.0",
+		"angular" : "1.4.*"
 	},
 	"install" : {
 		"base":  "webapp/lib/",
@@ -50,6 +51,9 @@
 			],
 			"handlebars" : [
 				"bower_components/handlebars/handlebars.min.js"
+			],
+			"angular" : [
+				"bower_components/angular/angular.min.js"
 			]
 		}
 	}
