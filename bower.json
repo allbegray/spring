@@ -13,7 +13,8 @@
 		"jqgrid": "4.7.1",
 		"jquery-ui": "1.11.3",
 		"font-awesome": "4.3.0",
-		"moment" : "2.9.0"
+		"moment" : "2.9.0",
+		"handlebars" : "3.0.0"
 	},
 	"install" : {
 		"base":  "webapp/lib/",
@@ -46,6 +47,9 @@
 			],
 			"moment" : [
 				"bower_components/moment/min/moment-with-locales.min.js"
+			],
+			"handlebars" : [
+				"bower_components/handlebars/handlebars.min.js"
 			]
 		}
 	}
