@@ -17,49 +17,5 @@
 		"jgrowl" : "1.4.*",
 		"handlebars" : "3.0.0",
 		"angular" : "1.4.*"
-	},
-	"install" : {
-		"base":  "webapp/lib/",
-		"path" : {
-			"js": "{name}",
-			"css": "{name}/css",
-			"eot": "{name}/fonts",
-			"svg": "{name}/fonts",
-			"ttf": "{name}/fonts",
-			"woff": "{name}/fonts",
-			"otf" : "{name}/fonts",
-			"woff2" : "{name}/fonts"
-		},
-		"sources" : {
-			"font-awesome" : [
-				"bower_components/font-awesome/css/font-awesome.min.css",
-				"bower_components/font-awesome/fonts/*"
-			],
-			"jquery" : [
-				"bower_components/jquery/dist/jquery.min.js"
-			],
-			"jqgrid" : [
-				"bower_components/jqgrid/js/minified/jquery.jqGrid.min.js",
-				"bower_components/jqgrid/js/i18n/grid.locale-en.js",
-				"bower_components/jqgrid/js/i18n/grid.locale-kr.js",
-				"bower_components/jqgrid/css/ui.jqgrid.css"
-			],
-			"jquery-ui" : [
-				"bower_components/jquery-ui/jquery-ui.min.js"
-			],
-			"moment" : [
-				"bower_components/moment/min/moment-with-locales.min.js"
-			],
-			"jgrowl" : [
-				"bower_components/jgrowl/jquery.jgrowl.min.js",
-				"bower_components/jgrowl/jquery.jgrowl.min.css"
-			],
-			"handlebars" : [
-				"bower_components/handlebars/handlebars.min.js"
-			],
-			"angular" : [
-				"bower_components/angular/angular.min.js"
-			]
-		}
 	}
 }

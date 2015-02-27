@@ -9,10 +9,18 @@ clean flyway:clean flyway:migrate generate-sources
 ##2.1. nodejs 설치
 http://nodejs.org/
 
-##2.2. npm 으로 bower-installer 패키지 설치
-npm install -g bower  
-npm install -g bower-installer  
+##2.2. npm 패키지 설치
 
-##2.3. 의존성 가져오기
-프로젝트 루트로 이동한 다음  
-bower-installer
+npm install -g bower
+
+프로젝트 패키지로 이동하여  
+npm install --save-dev gulp  
+npm install --save-dev del  
+npm install --save-dev gulp-uglify  
+
+
+##2.3. bower 자바스크립트 의존성 가져오기  
+bower install
+
+##2.4. gulp 로 minify 한 파일만 추출하여 webapp/lib 로 복사
+gulp
