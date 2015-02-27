@@ -23,11 +23,11 @@ public class SecurityWebApplicationInitializer extends AbstractSecurityWebApplic
 
 		insertFilters(servletContext, new HiddenHttpMethodFilter());
 
-		insertFilters(servletContext, new CrossScriptingFilter());
-
 		MultipartFilter multipartFilter = new MultipartFilter();
 		multipartFilter.setMultipartResolverBeanName("multipartResolver");
 		insertFilters(servletContext, multipartFilter);
+		
+		insertFilters(servletContext, new CrossScriptingFilter());
 	}
 
 	@Override
