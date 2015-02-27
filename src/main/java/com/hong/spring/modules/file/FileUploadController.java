@@ -19,7 +19,7 @@ public class FileUploadController {
 		return "/file/singleUpload";
 	}
 
-	@RequestMapping(value = "/singleSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/singleSave", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
 	public @ResponseBody String singleSave(@RequestParam("file") MultipartFile file, @RequestParam("desc") String desc) {
 		System.out.println("File Description:" + desc);
 		String fileName = null;
@@ -44,7 +44,7 @@ public class FileUploadController {
 		return "/file/multipleUpload";
 	}
 
-	@RequestMapping(value = "/multipleSave", method = RequestMethod.POST)
+	@RequestMapping(value = "/multipleSave", method = RequestMethod.POST, produces = "text/html; charset=UTF-8")
 	public @ResponseBody String multipleSave(@RequestParam("file") MultipartFile[] files) {
 		String fileName = null;
 		String msg = "";
