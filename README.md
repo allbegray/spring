@@ -1,8 +1,8 @@
-# 1. Maven 빌드
+# 1. Maven 개발 빌드
 
 clean flyway:clean flyway:migrate generate-sources
 
-# 2. Bower 빌드
+# 2. 자바스크립트 관리
 
 *빌드 된거 webapp/lib 에 업로드 다 해두었으니 필수는 아님*
 
@@ -13,7 +13,7 @@ http://nodejs.org/
 
 npm install -g bower
 
-프로젝트 패키지로 이동하여  
+프로젝트 패키지로 이동하여 다음 명령어 실행(글로벌로 등록해도 상관없다.)  
 npm install --save-dev gulp  
 npm install --save-dev del  
 npm install --save-dev gulp-uglify  
