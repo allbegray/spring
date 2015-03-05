@@ -12,6 +12,8 @@ gulp.task('clean', function(cb) {
 gulp.task('bower_components_minify_copy', ['clean'], function () {
 	
 	var mappings = {
+		
+		'/parsleyjs/dist/*.min.*' : '/parsleyjs/',
 			
 		'/bootstrap/dist/css/*.min.*' : '/bootstrap/css/',
 		'/bootstrap/dist/fonts/*.*' : '/bootstrap/fonts/',
