@@ -3,6 +3,8 @@ package com.hong.spring.common.config.initializer;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
 import javax.servlet.ServletRegistration.Dynamic;
+import javax.servlet.http.HttpSessionEvent;
+import javax.servlet.http.HttpSessionListener;
 
 import org.springframework.core.annotation.Order;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
@@ -11,7 +13,6 @@ import com.hong.spring.common.config.PersistenceConfig;
 import com.hong.spring.common.config.RootConfig;
 import com.hong.spring.common.config.SecurityConfig;
 import com.hong.spring.common.config.WebMvcConfig;
-import com.hong.spring.common.web.listener.SessionListener;
 
 @Order(1)
 public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {
@@ -34,7 +35,19 @@ public class WebAppInitializer extends AbstractAnnotationConfigDispatcherServlet
 	@Override
 	public void onStartup(ServletContext servletContext) throws ServletException {
 		super.onStartup(servletContext);
-		servletContext.addListener(new SessionListener());
+		servletContext.addListener(new HttpSessionListener() {
+
+			@Override
+			public void sessionCreated(HttpSessionEvent se) {
+				se.getSession().setMaxInactiveInterval(5 * 60);
+			}
+
+			@Override
+			public void sessionDestroyed(HttpSessionEvent se) {
+				// ignore
+			}
+
+		});
 	}
 
 	@Override
