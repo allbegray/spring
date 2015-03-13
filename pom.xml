@@ -253,6 +253,13 @@
 			<version>3.11</version>
 		</dependency>
 
+		<!-- time -->
+		<dependency>
+			<groupId>org.ocpsoft.prettytime</groupId>
+			<artifactId>prettytime</artifactId>
+			<version>3.2.7.Final</version>
+		</dependency>
+
         <!-- guava -->
         <dependency>
             <groupId>com.google.guava</groupId>
