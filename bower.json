@@ -19,6 +19,7 @@
 		"handlebars" : "3.0.0",
 		"angular" : "1.4.*",
 		"underscore" : "1.8.*",
-		"parsleyjs" : "2.0.7"
+		"parsleyjs" : "2.0.7",
+		"echarts" : "2.2.*"
 	}
 }
