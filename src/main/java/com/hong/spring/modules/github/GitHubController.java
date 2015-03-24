@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.context.request.async.DeferredResult;
 
 import com.hong.spring.modules.github.model.GitHubUser;
+import com.hong.spring.modules.github.model.GitHubUserDetail;
 
 @Controller
 @RequestMapping("/github")
@@ -21,13 +22,18 @@ public class GitHubController {
 	@Autowired
 	private GitHubService gitHubService;
 
+	@RequestMapping("/users/{user}/followers")
+	public ResponseEntity<GitHubUser[]> followers(@PathVariable String user) throws InterruptedException, ExecutionException {
+		return gitHubService.followers(user);
+	}
+
 	@RequestMapping("/users/{user}")
 	public DeferredResult<ResponseEntity<?>> user(@PathVariable String user) throws InterruptedException, ExecutionException {
 
 		DeferredResult<ResponseEntity<?>> deferredResult = new DeferredResult<>();
 
-		ListenableFuture<ResponseEntity<GitHubUser>> future = gitHubService.user(user);
-		future.addCallback(new ListenableFutureCallback<ResponseEntity<GitHubUser>>() {
+		ListenableFuture<ResponseEntity<GitHubUserDetail>> future = gitHubService.user(user);
+		future.addCallback(new ListenableFutureCallback<ResponseEntity<GitHubUserDetail>>() {
 
 			@Override
 			public void onFailure(Throwable t) {
@@ -36,8 +42,8 @@ public class GitHubController {
 			}
 
 			@Override
-			public void onSuccess(ResponseEntity<GitHubUser> result) {
-				ResponseEntity<GitHubUser> responseEntity = new ResponseEntity<>(result.getBody(), HttpStatus.OK);
+			public void onSuccess(ResponseEntity<GitHubUserDetail> result) {
+				ResponseEntity<GitHubUserDetail> responseEntity = new ResponseEntity<>(result.getBody(), HttpStatus.OK);
 				deferredResult.setResult(responseEntity);
 			}
 
