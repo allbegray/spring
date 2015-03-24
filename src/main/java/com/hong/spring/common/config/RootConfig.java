@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.web.client.AsyncRestTemplate;
 
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -34,6 +35,11 @@ public class RootConfig {
 	@Bean
 	public SerializationConfig serializationConfig() {
 		return objectMapper().getSerializationConfig();
+	}
+	
+	@Bean
+	public AsyncRestTemplate asyncRestTemplate() {
+		return new AsyncRestTemplate();
 	}
 
 }
