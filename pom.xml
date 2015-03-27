@@ -16,7 +16,7 @@
         <java.version>1.8</java.version>
         <web.directory>webapp</web.directory>
 
-        <org.springframework.version>4.1.1.RELEASE</org.springframework.version>
+        <org.springframework.version>4.1.6.RELEASE</org.springframework.version>
         <org.springframework.security.version>4.0.0.RELEASE</org.springframework.security.version>
         <org.springframework.data.version>1.7.1.RELEASE</org.springframework.data.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
