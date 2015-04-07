@@ -1,38 +1,33 @@
 package com.hong.spring.modules.scheduler;
 
+import java.util.List;
+
+import org.quartz.SchedulerMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@RestController("/api/quartz")
+@RestController
+@RequestMapping("/api/quartz")
 public class SchedulerRestController {
 
 	@Autowired
 	private SchedulerService schedulerService;
 
 	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
-	public void schedulers() {
-		
-		
+	public List<SchedulerMetaData> schedulers() {
+		return schedulerService.getAllSchedulers();
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}", method = RequestMethod.GET)
-	public void scheduler(@PathVariable String schedulerName) {
-		
-		
-	}
-
-	@RequestMapping(value = "/schedulers/{schedulerName}", method = RequestMethod.GET)
-	public void scheduler_detail(@PathVariable String schedulerName) {
-		
-		
+	public SchedulerMetaData scheduler(@PathVariable String schedulerName) {
+		return schedulerService.getScheduler(schedulerName);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/shutdown", method = RequestMethod.PUT)
 	public void scheduler_shutdown(@PathVariable String schedulerName) {
-		
 		
 	}
 
