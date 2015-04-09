@@ -24,5 +24,3 @@ bower install
 
 ##2.4. gulp 로 minify 한 파일만 추출하여 webapp/lib 로 복사
 gulp  
-
-123
