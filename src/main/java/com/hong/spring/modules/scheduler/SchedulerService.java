@@ -21,9 +21,10 @@ import org.springframework.stereotype.Component;
 import com.hong.spring.common.scheduler.SchedulerTemplate;
 import com.hong.spring.common.scheduler.SchedulerUtils;
 import com.hong.spring.common.scheduler.job.HelloJob;
-import com.hong.spring.common.scheduler.model.AbstractTriggerInfo;
 import com.hong.spring.common.scheduler.model.JobInfo;
 import com.hong.spring.common.scheduler.model.ScheduleInfo;
+import com.hong.spring.common.scheduler.model.calendar.AbstractCalendarInfo;
+import com.hong.spring.common.scheduler.model.trigger.AbstractTriggerInfo;
 
 @Component
 public class SchedulerService {
@@ -87,6 +88,14 @@ public class SchedulerService {
 		JobDetail jobDetail = schedulerTemplate.getJobDetail(jobKey);
 		List<? extends Trigger> triggers = schedulerTemplate.getTriggersOfJob(jobKey);
 		return new JobInfo(jobDetail, triggers);
+	}
+	
+	public List<? extends AbstractCalendarInfo> getCalendarInfos(String schedulerName) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		
+		return schedulerTemplate.getCalendarNames().stream()
+			.map(calName -> SchedulerUtils.toCalendarInfo(schedulerTemplate.getCalendar(calName)))
+			.collect(Collectors.toList());
 	}
 
 }

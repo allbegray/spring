@@ -1,16 +1,30 @@
 package com.hong.spring.common.scheduler;
 
+import org.quartz.Calendar;
 import org.quartz.CalendarIntervalTrigger;
 import org.quartz.CronTrigger;
 import org.quartz.DailyTimeIntervalTrigger;
 import org.quartz.SimpleTrigger;
 import org.quartz.Trigger;
+import org.quartz.impl.calendar.AnnualCalendar;
+import org.quartz.impl.calendar.CronCalendar;
+import org.quartz.impl.calendar.DailyCalendar;
+import org.quartz.impl.calendar.HolidayCalendar;
+import org.quartz.impl.calendar.MonthlyCalendar;
+import org.quartz.impl.calendar.WeeklyCalendar;
 
-import com.hong.spring.common.scheduler.model.AbstractTriggerInfo;
-import com.hong.spring.common.scheduler.model.CalendarIntervalTriggerInfo;
-import com.hong.spring.common.scheduler.model.CronTriggerInfo;
-import com.hong.spring.common.scheduler.model.DailyTimeIntervalTriggerInfo;
-import com.hong.spring.common.scheduler.model.SimpleTriggerInfo;
+import com.hong.spring.common.scheduler.model.calendar.AbstractCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.AnnualCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.CronCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.DailyCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.HolidayCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.MonthlyCalendarInfo;
+import com.hong.spring.common.scheduler.model.calendar.WeeklyCalendarInfo;
+import com.hong.spring.common.scheduler.model.trigger.AbstractTriggerInfo;
+import com.hong.spring.common.scheduler.model.trigger.CalendarIntervalTriggerInfo;
+import com.hong.spring.common.scheduler.model.trigger.CronTriggerInfo;
+import com.hong.spring.common.scheduler.model.trigger.DailyTimeIntervalTriggerInfo;
+import com.hong.spring.common.scheduler.model.trigger.SimpleTriggerInfo;
 
 public class SchedulerUtils {
 
@@ -34,6 +48,31 @@ public class SchedulerUtils {
 
 		}
 		return abstractTriggerInfo;
+	}
+
+	public static AbstractCalendarInfo toCalendarInfo(Calendar calendar) {
+		AbstractCalendarInfo abstractCalendarInfo = null;
+
+		if (calendar instanceof AnnualCalendarInfo) {
+			abstractCalendarInfo = new AnnualCalendarInfo((AnnualCalendar) calendar);
+
+		} else if (calendar instanceof CronCalendarInfo) {
+			abstractCalendarInfo = new CronCalendarInfo((CronCalendar) calendar);
+
+		} else if (calendar instanceof DailyCalendarInfo) {
+			abstractCalendarInfo = new DailyCalendarInfo((DailyCalendar) calendar);
+
+		} else if (calendar instanceof HolidayCalendarInfo) {
+			abstractCalendarInfo = new HolidayCalendarInfo((HolidayCalendar) calendar);
+
+		} else if (calendar instanceof MonthlyCalendarInfo) {
+			abstractCalendarInfo = new MonthlyCalendarInfo((MonthlyCalendar) calendar);
+
+		} else if (calendar instanceof WeeklyCalendarInfo) {
+			abstractCalendarInfo = new WeeklyCalendarInfo((WeeklyCalendar) calendar);
+
+		}
+		return abstractCalendarInfo;
 	}
 
 }

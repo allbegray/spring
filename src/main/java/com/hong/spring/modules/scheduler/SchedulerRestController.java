@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.hong.spring.common.scheduler.model.AbstractTriggerInfo;
 import com.hong.spring.common.scheduler.model.JobInfo;
 import com.hong.spring.common.scheduler.model.ScheduleInfo;
+import com.hong.spring.common.scheduler.model.trigger.AbstractTriggerInfo;
 
 @RestController
 @RequestMapping("/api/quartz")

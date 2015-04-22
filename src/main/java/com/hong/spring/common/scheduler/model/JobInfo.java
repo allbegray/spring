@@ -12,6 +12,7 @@ import org.quartz.JobKey;
 import org.quartz.Trigger;
 
 import com.hong.spring.common.scheduler.SchedulerUtils;
+import com.hong.spring.common.scheduler.model.trigger.AbstractTriggerInfo;
 
 public class JobInfo {
 

@@ -1,4 +1,4 @@
-package com.hong.spring.common.scheduler.model;
+package com.hong.spring.common.scheduler.model.trigger;
 
 import org.quartz.SimpleTrigger;
 import org.quartz.spi.OperableTrigger;
