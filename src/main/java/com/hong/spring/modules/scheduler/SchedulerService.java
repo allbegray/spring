@@ -94,8 +94,8 @@ public class SchedulerService {
 		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
 		
 		return schedulerTemplate.getCalendarNames().stream()
-			.map(calName -> SchedulerUtils.toCalendarInfo(schedulerTemplate.getCalendar(calName)))
-			.collect(Collectors.toList());
+				.map(calName -> SchedulerUtils.toCalendarInfo(schedulerTemplate.getCalendar(calName)))
+				.collect(Collectors.toList());
 	}
 
 }
