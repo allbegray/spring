@@ -2,12 +2,15 @@ package com.hong.spring.modules.scheduler;
 
 import java.util.List;
 
-import org.quartz.SchedulerMetaData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import com.hong.spring.common.scheduler.model.AbstractTriggerInfo;
+import com.hong.spring.common.scheduler.model.JobInfo;
+import com.hong.spring.common.scheduler.model.ScheduleInfo;
 
 @RestController
 @RequestMapping("/api/quartz")
@@ -17,13 +20,13 @@ public class SchedulerRestController {
 	private SchedulerService schedulerService;
 
 	@RequestMapping(value = "/schedulers", method = RequestMethod.GET)
-	public List<SchedulerMetaData> schedulers() {
-		return schedulerService.getAllSchedulers();
+	public List<ScheduleInfo> schedulers() {
+		return schedulerService.getScheduleInfos();
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}", method = RequestMethod.GET)
-	public SchedulerMetaData scheduler(@PathVariable String schedulerName) {
-		return schedulerService.getScheduler(schedulerName);
+	public ScheduleInfo scheduler(@PathVariable String schedulerName) {
+		return schedulerService.getScheduleInfo(schedulerName);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/shutdown", method = RequestMethod.PUT)
@@ -44,9 +47,8 @@ public class SchedulerRestController {
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs", method = RequestMethod.GET)
-	public void jobs(@PathVariable String schedulerName) {
-		
-		
+	public List<JobInfo> jobs(@PathVariable String schedulerName) {
+		return schedulerService.getJobInfos(schedulerName);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}", method = RequestMethod.GET)
@@ -97,9 +99,8 @@ public class SchedulerRestController {
 	}
 	
 	@RequestMapping(value = "/schedulers/{schedulerName}/triggers", method = RequestMethod.GET)
-	public void triggers(@PathVariable String schedulerName) {
-		
-		
+	public List<? extends AbstractTriggerInfo> triggers(@PathVariable String schedulerName) {
+		return schedulerService.getTriggerInfos(schedulerName);
 	}
 	
 	@RequestMapping(value = "/schedulers/{schedulerName}/triggers/{triggerGroup}", method = RequestMethod.GET)

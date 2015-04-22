@@ -2,6 +2,11 @@ package com.hong.spring.common.scheduler.model;
 
 import java.util.Date;
 
+import org.quartz.SchedulerMetaData;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hong.spring.common.serializer.DateyyyyMMddHHmmssSerializer;
+
 public class ScheduleInfo {
 
 	private String schedName;
@@ -19,6 +24,27 @@ public class ScheduleInfo {
 	private Class<?> tpClass;
 	private int tpSize;
 	private String version;
+	
+	public ScheduleInfo() {
+	}
+
+	public ScheduleInfo(SchedulerMetaData metaData) {
+		this.schedName = metaData.getSchedulerName();
+		this.schedInst = metaData.getSchedulerInstanceId();
+		this.schedClass = metaData.getSchedulerClass();
+		this.isRemote = metaData.isSchedulerRemote();
+		this.started = metaData.isStarted();
+		this.isInStandbyMode = metaData.isInStandbyMode();
+		this.shutdown = metaData.isShutdown();
+		this.startTime = metaData.getRunningSince();
+		this.numJobsExec = metaData.getNumberOfJobsExecuted();
+		this.jsClass = metaData.getJobStoreClass();
+		this.jsPersistent = metaData.isJobStoreSupportsPersistence();
+		this.jsClustered = metaData.isJobStoreClustered();
+		this.tpClass = metaData.getThreadPoolClass();
+		this.tpSize = metaData.getThreadPoolSize();
+		this.version = metaData.getVersion();
+	}
 
 	public String getSchedName() {
 		return schedName;
@@ -76,6 +102,7 @@ public class ScheduleInfo {
 		this.shutdown = shutdown;
 	}
 
+	@JsonSerialize(using = DateyyyyMMddHHmmssSerializer.class)
 	public Date getStartTime() {
 		return startTime;
 	}

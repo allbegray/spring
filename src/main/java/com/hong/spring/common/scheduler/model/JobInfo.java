@@ -1,9 +1,17 @@
 package com.hong.spring.common.scheduler.model;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 import org.quartz.Job;
 import org.quartz.JobDataMap;
+import org.quartz.JobDetail;
+import org.quartz.JobKey;
+import org.quartz.Trigger;
+
+import com.hong.spring.common.scheduler.SchedulerUtils;
 
 public class JobInfo {
 
@@ -14,7 +22,30 @@ public class JobInfo {
 	private JobDataMap jobDataMap;
 	private boolean durability;
 	private boolean shouldRecover;
-	private List<? extends AbstractTriggerInfo> triggerInfos;
+	private List<AbstractTriggerInfo> triggerInfos;
+
+	public JobInfo() {
+	}
+
+	public JobInfo(JobDetail jobDetail) {
+		this(jobDetail, null);
+	}
+
+	public JobInfo(JobDetail jobDetail, List<? extends Trigger> triggers) {
+		JobKey jobKey = jobDetail.getKey();
+		this.name = jobKey.getName();
+		this.group = jobKey.getGroup();
+		this.jobClass = jobDetail.getJobClass();
+		this.jobDataMap = jobDetail.getJobDataMap();
+		this.durability = jobDetail.isDurable();
+		this.shouldRecover = jobDetail.requestsRecovery();
+
+		if (triggers != null) {
+			triggerInfos = triggers.stream()
+					.map(trigger -> SchedulerUtils.toTriggerInfo(trigger))
+					.collect(Collectors.toList());
+		}
+	}
 
 	public String getName() {
 		return name;
@@ -72,12 +103,17 @@ public class JobInfo {
 		this.shouldRecover = shouldRecover;
 	}
 
-	public List<? extends AbstractTriggerInfo> getTriggerInfos() {
+	public List<AbstractTriggerInfo> getTriggerInfos() {
 		return triggerInfos;
 	}
 
-	public void setTriggerInfos(List<? extends AbstractTriggerInfo> triggerInfos) {
+	public void setTriggerInfos(List<AbstractTriggerInfo> triggerInfos) {
 		this.triggerInfos = triggerInfos;
+	}
+
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this, ToStringStyle.MULTI_LINE_STYLE);
 	}
 
 }

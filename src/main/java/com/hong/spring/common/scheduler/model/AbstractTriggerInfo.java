@@ -1,8 +1,16 @@
 package com.hong.spring.common.scheduler.model;
 
-import org.quartz.JobDataMap;
+import java.util.Date;
 
-public class AbstractTriggerInfo {
+import org.quartz.JobDataMap;
+import org.quartz.JobKey;
+import org.quartz.TriggerKey;
+import org.quartz.spi.OperableTrigger;
+
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.hong.spring.common.serializer.DateyyyyMMddHHmmssSerializer;
+
+public abstract class AbstractTriggerInfo {
 
 	private String name;
 	private String group;
@@ -14,6 +22,37 @@ public class AbstractTriggerInfo {
 	private String fireInstanceId;
 	private int misfireInstruction;
 	private int priority;
+
+	private Date startTime;
+	private Date endTime;
+	private Date nextFireTime;
+	private Date previousFireTime;
+
+	public AbstractTriggerInfo() {
+	}
+
+	public AbstractTriggerInfo(OperableTrigger trigger) {
+		TriggerKey triggerKey = trigger.getKey();
+		this.name = triggerKey.getName();
+		this.group = triggerKey.getGroup();
+
+		JobKey jobKey = trigger.getJobKey();
+		this.jobName = jobKey.getName();
+		this.jobGroup = jobKey.getGroup();
+
+		this.description = trigger.getDescription();
+		this.jobDataMap = trigger.getJobDataMap();
+		this.calendarName = trigger.getCalendarName();
+
+		this.fireInstanceId = trigger.getFireInstanceId();
+		this.misfireInstruction = trigger.getMisfireInstruction();
+		this.priority = trigger.getPriority();
+
+		this.startTime = trigger.getStartTime();
+		this.endTime = trigger.getEndTime();
+		this.nextFireTime = trigger.getNextFireTime();
+		this.previousFireTime = trigger.getPreviousFireTime();
+	}
 
 	public String getName() {
 		return name;
@@ -93,6 +132,42 @@ public class AbstractTriggerInfo {
 
 	public void setPriority(int priority) {
 		this.priority = priority;
+	}
+
+	@JsonSerialize(using = DateyyyyMMddHHmmssSerializer.class)
+	public Date getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Date startTime) {
+		this.startTime = startTime;
+	}
+
+	@JsonSerialize(using = DateyyyyMMddHHmmssSerializer.class)
+	public Date getEndTime() {
+		return endTime;
+	}
+
+	public void setEndTime(Date endTime) {
+		this.endTime = endTime;
+	}
+
+	@JsonSerialize(using = DateyyyyMMddHHmmssSerializer.class)
+	public Date getNextFireTime() {
+		return nextFireTime;
+	}
+
+	public void setNextFireTime(Date nextFireTime) {
+		this.nextFireTime = nextFireTime;
+	}
+
+	@JsonSerialize(using = DateyyyyMMddHHmmssSerializer.class)
+	public Date getPreviousFireTime() {
+		return previousFireTime;
+	}
+
+	public void setPreviousFireTime(Date previousFireTime) {
+		this.previousFireTime = previousFireTime;
 	}
 
 }

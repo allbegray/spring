@@ -1,17 +1,14 @@
 package com.hong.spring.common.scheduler.model;
 
-import java.util.Date;
 import java.util.Set;
 
-import org.quartz.TimeOfDay;
+import org.quartz.DailyTimeIntervalTrigger;
 import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.spi.OperableTrigger;
+import org.quartz.TimeOfDay;
 
 public class DailyTimeIntervalTriggerInfo extends AbstractTriggerInfo {
 
-	private Date startTime;
-	private Date endTime;
-	private Date nextFireTime;
-	private Date previousFireTime;
 	private int repeatCount;
 	private int repeatInterval;
 	private IntervalUnit repeatIntervalUnit;
@@ -19,38 +16,19 @@ public class DailyTimeIntervalTriggerInfo extends AbstractTriggerInfo {
 	private TimeOfDay startTimeOfDay;
 	private TimeOfDay endTimeOfDay;
 	private int timesTriggered;
-	private boolean complete;
 
-	public Date getStartTime() {
-		return startTime;
+	public DailyTimeIntervalTriggerInfo() {
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public Date getNextFireTime() {
-		return nextFireTime;
-	}
-
-	public void setNextFireTime(Date nextFireTime) {
-		this.nextFireTime = nextFireTime;
-	}
-
-	public Date getPreviousFireTime() {
-		return previousFireTime;
-	}
-
-	public void setPreviousFireTime(Date previousFireTime) {
-		this.previousFireTime = previousFireTime;
+	public DailyTimeIntervalTriggerInfo(DailyTimeIntervalTrigger trigger) {
+		super((OperableTrigger) trigger);
+		this.repeatCount = trigger.getRepeatCount();
+		this.repeatInterval = trigger.getRepeatInterval();
+		this.repeatIntervalUnit = trigger.getRepeatIntervalUnit();
+		this.daysOfWeek = trigger.getDaysOfWeek();
+		this.startTimeOfDay = trigger.getStartTimeOfDay();
+		this.endTimeOfDay = trigger.getEndTimeOfDay();
+		this.timesTriggered = trigger.getTimesTriggered();
 	}
 
 	public int getRepeatCount() {
@@ -107,14 +85,6 @@ public class DailyTimeIntervalTriggerInfo extends AbstractTriggerInfo {
 
 	public void setTimesTriggered(int timesTriggered) {
 		this.timesTriggered = timesTriggered;
-	}
-
-	public boolean isComplete() {
-		return complete;
-	}
-
-	public void setComplete(boolean complete) {
-		this.complete = complete;
 	}
 
 }

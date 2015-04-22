@@ -1,54 +1,31 @@
 package com.hong.spring.common.scheduler.model;
 
-import java.util.Date;
 import java.util.TimeZone;
 
+import org.quartz.CalendarIntervalTrigger;
 import org.quartz.DateBuilder.IntervalUnit;
+import org.quartz.spi.OperableTrigger;
 
 public class CalendarIntervalTriggerInfo extends AbstractTriggerInfo {
 
-	private Date startTime;
-	private Date endTime;
-	private Date nextFireTime;
-	private Date previousFireTime;
 	private int repeatInterval;
 	private IntervalUnit repeatIntervalUnit;
 	private TimeZone timeZone;
 	private boolean preserveHourOfDayAcrossDaylightSavings;
 	private boolean skipDayIfHourDoesNotExist;
 	private int timesTriggered;
-	private boolean complete;
 
-	public Date getStartTime() {
-		return startTime;
+	public CalendarIntervalTriggerInfo() {
 	}
 
-	public void setStartTime(Date startTime) {
-		this.startTime = startTime;
-	}
-
-	public Date getEndTime() {
-		return endTime;
-	}
-
-	public void setEndTime(Date endTime) {
-		this.endTime = endTime;
-	}
-
-	public Date getNextFireTime() {
-		return nextFireTime;
-	}
-
-	public void setNextFireTime(Date nextFireTime) {
-		this.nextFireTime = nextFireTime;
-	}
-
-	public Date getPreviousFireTime() {
-		return previousFireTime;
-	}
-
-	public void setPreviousFireTime(Date previousFireTime) {
-		this.previousFireTime = previousFireTime;
+	public CalendarIntervalTriggerInfo(CalendarIntervalTrigger trigger) {
+		super((OperableTrigger) trigger);
+		this.repeatInterval = trigger.getRepeatInterval();
+		this.repeatIntervalUnit = trigger.getRepeatIntervalUnit();
+		this.timeZone = trigger.getTimeZone();
+		this.preserveHourOfDayAcrossDaylightSavings = trigger.isPreserveHourOfDayAcrossDaylightSavings();
+		this.skipDayIfHourDoesNotExist = trigger.isSkipDayIfHourDoesNotExist();
+		this.timesTriggered = trigger.getTimesTriggered();
 	}
 
 	public int getRepeatInterval() {
@@ -97,14 +74,6 @@ public class CalendarIntervalTriggerInfo extends AbstractTriggerInfo {
 
 	public void setTimesTriggered(int timesTriggered) {
 		this.timesTriggered = timesTriggered;
-	}
-
-	public boolean isComplete() {
-		return complete;
-	}
-
-	public void setComplete(boolean complete) {
-		this.complete = complete;
 	}
 
 }
