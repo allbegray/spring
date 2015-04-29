@@ -111,5 +111,20 @@ public class SchedulerService {
 				.map(jec -> new JobInfo(jec.getJobDetail(), Arrays.asList(jec.getTrigger())))
 				.collect(Collectors.toList());
 	}
+	
+	public void shutdown(String schedulerName, boolean waitForJobsToComplete) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		schedulerTemplate.shutdown(waitForJobsToComplete);
+	}
+	
+	public void standby(String schedulerName) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		schedulerTemplate.standby();
+	}
+	
+	public void start(String schedulerName) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		schedulerTemplate.start();
+	}
 
 }

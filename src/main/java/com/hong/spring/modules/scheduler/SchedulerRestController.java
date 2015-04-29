@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hong.spring.common.scheduler.model.JobInfo;
@@ -30,20 +31,21 @@ public class SchedulerRestController {
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/shutdown", method = RequestMethod.PUT)
-	public void scheduler_shutdown(@PathVariable String schedulerName) {
+	public void scheduler_shutdown(
+			@PathVariable String schedulerName,
+			@RequestParam(value = "waitForJobsToComplete", required = false) boolean waitForJobsToComplete) {
 		
+		schedulerService.shutdown(schedulerName, waitForJobsToComplete);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/standby", method = RequestMethod.PUT)
 	public void scheduler_standby(@PathVariable String schedulerName) {
-		
-		
+		schedulerService.standby(schedulerName);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/start", method = RequestMethod.PUT)
 	public void scheduler_start(@PathVariable String schedulerName) {
-		
-		
+		schedulerService.start(schedulerName);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs", method = RequestMethod.GET)
