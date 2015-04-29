@@ -67,6 +67,16 @@ public class SchedulerRestController {
 		
 		
 	}
+	
+	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}/{jobName}/run", method = RequestMethod.POST)
+	public void jobs_jobgroup_jobname_run(
+			@PathVariable String schedulerName,
+			@PathVariable String jobGroup,
+			@PathVariable String jobName) {
+		
+		schedulerService.executeJobNow(schedulerName, jobName, jobGroup);
+		
+	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}/{jobName}/triggers", method = RequestMethod.GET)
 	public void jobs_jobgroup_jobname_triggers(

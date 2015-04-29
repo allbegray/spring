@@ -1,5 +1,8 @@
 package com.hong.spring.common.config;
 
+import java.util.concurrent.Executor;
+import java.util.concurrent.Executors;
+
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.ComponentScan.Filter;
@@ -13,6 +16,7 @@ import org.springframework.web.client.RestTemplate;
 import com.fasterxml.jackson.annotation.JsonInclude.Include;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationConfig;
+import com.google.common.eventbus.AsyncEventBus;
 
 @Configuration
 @EnableAspectJAutoProxy(proxyTargetClass = true)
@@ -46,6 +50,16 @@ public class RootConfig {
 	@Bean
 	public RestTemplate restTemplate() {
 		return new RestTemplate();
+	}
+	
+	@Bean
+	public AsyncEventBus asyncEventBus() {
+		return new AsyncEventBus(asyncTaskExecutor());
+	}
+	
+	@Bean
+	public Executor asyncTaskExecutor() {
+		return Executors.newCachedThreadPool();
 	}
 
 }

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.quartz.JobDetail;
+import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
@@ -79,8 +80,8 @@ public class SchedulerService {
 			.collect(Collectors.toList());
 	}
 
-	public JobInfo getJobInfo(String schedulerName, String name, String group) {
-		return getJobInfo(schedulerName, JobKey.jobKey(name, group));
+	public JobInfo getJobInfo(String schedulerName, String jobName, String jobGroup) {
+		return getJobInfo(schedulerName, JobKey.jobKey(jobName, jobGroup));
 	}
 
 	public JobInfo getJobInfo(String schedulerName, JobKey jobKey) {
@@ -96,6 +97,22 @@ public class SchedulerService {
 		return schedulerTemplate.getCalendarNames().stream()
 				.map(calName -> SchedulerUtils.toCalendarInfo(schedulerTemplate.getCalendar(calName)))
 				.collect(Collectors.toList());
+	}
+	
+	public void executeJobNow(String schedulerName, String jobName, String jobGroup) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		schedulerTemplate.triggerJob(JobKey.jobKey(jobName, jobGroup));
+	}
+	
+	public void test(String schedulerName) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		
+		List<JobExecutionContext> jobExecutionContexts = schedulerTemplate.getCurrentlyExecutingJobs();
+		JobExecutionContext jec = jobExecutionContexts.get(0);
+		
+		new JobInfo(jec.getJobDetail());
+		SchedulerUtils.toTriggerInfo(jec.getTrigger());
+		
 	}
 
 }
