@@ -4,6 +4,7 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 import static org.quartz.TriggerBuilder.newTrigger;
 
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -11,7 +12,6 @@ import java.util.stream.Collectors;
 import javax.annotation.PostConstruct;
 
 import org.quartz.JobDetail;
-import org.quartz.JobExecutionContext;
 import org.quartz.JobKey;
 import org.quartz.Scheduler;
 import org.quartz.Trigger;
@@ -104,15 +104,12 @@ public class SchedulerService {
 		schedulerTemplate.triggerJob(JobKey.jobKey(jobName, jobGroup));
 	}
 	
-	public void test(String schedulerName) {
+	public List<JobInfo> getCurrentlyExecutingJobInfos(String schedulerName) {
 		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
-		
-		List<JobExecutionContext> jobExecutionContexts = schedulerTemplate.getCurrentlyExecutingJobs();
-		JobExecutionContext jec = jobExecutionContexts.get(0);
-		
-		new JobInfo(jec.getJobDetail());
-		SchedulerUtils.toTriggerInfo(jec.getTrigger());
-		
+
+		return schedulerTemplate.getCurrentlyExecutingJobs().stream()
+				.map(jec -> new JobInfo(jec.getJobDetail(), Arrays.asList(jec.getTrigger())))
+				.collect(Collectors.toList());
 	}
 
 }

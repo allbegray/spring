@@ -50,6 +50,11 @@ public class SchedulerRestController {
 	public List<JobInfo> jobs(@PathVariable String schedulerName) {
 		return schedulerService.getJobInfos(schedulerName);
 	}
+	
+	@RequestMapping(value = "/schedulers/{schedulerName}/executing_jobs", method = RequestMethod.GET)
+	public List<JobInfo> executing_jobs(@PathVariable String schedulerName) {
+		return schedulerService.getCurrentlyExecutingJobInfos(schedulerName);
+	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}", method = RequestMethod.GET)
 	public void jobs_group(
