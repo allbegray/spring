@@ -17,7 +17,6 @@ import org.jooq.TableField;
 import org.jooq.UniqueKey;
 import org.jooq.UpdatableRecord;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.data.domain.Sort;
 
 @SuppressWarnings("rawtypes")
@@ -232,25 +231,12 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 			String sortFieldName = specifiedField.getProperty();
 			Sort.Direction sortDirection = specifiedField.getDirection();
 
-			TableField tableField = getTableField(sortFieldName);
+			TableField tableField = (TableField) this.getTable().field(sortFieldName);
 			SortField<?> querySortField = convertTableFieldToSortField(tableField, sortDirection);
 			querySortFields.add(querySortField);
 		}
 
 		return querySortFields;
-	}
-
-	private TableField getTableField(String sortFieldName) {
-		TableField sortField = null;
-		try {
-			java.lang.reflect.Field tableField = this.getTable().getClass().getField(sortFieldName);
-			sortField = (TableField) tableField.get(this.getTable());
-		} catch (NoSuchFieldException | IllegalAccessException ex) {
-			String errorMessage = String.format("Could not find table field: {}", sortFieldName);
-			throw new InvalidDataAccessApiUsageException(errorMessage, ex);
-		}
-
-		return sortField;
 	}
 
 	private SortField<?> convertTableFieldToSortField(TableField tableField, Sort.Direction sortDirection) {
