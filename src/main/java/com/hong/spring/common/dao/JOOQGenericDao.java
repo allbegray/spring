@@ -4,7 +4,6 @@ import static org.jooq.impl.DSL.row;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import org.jooq.Condition;
@@ -222,19 +221,15 @@ public abstract class JOOQGenericDao<R extends UpdatableRecord<R>, E, K> impleme
 		if (sortSpecification == null) {
 			return querySortFields;
 		}
-
-		Iterator<Sort.Order> specifiedFields = sortSpecification.iterator();
-
-		while (specifiedFields.hasNext()) {
-			Sort.Order specifiedField = specifiedFields.next();
-
+		
+		sortSpecification.forEach(specifiedField -> {
 			String sortFieldName = specifiedField.getProperty();
 			Sort.Direction sortDirection = specifiedField.getDirection();
 
 			TableField tableField = (TableField) this.getTable().field(sortFieldName);
 			SortField<?> querySortField = convertTableFieldToSortField(tableField, sortDirection);
 			querySortFields.add(querySortField);
-		}
+		});
 
 		return querySortFields;
 	}
