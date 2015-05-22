@@ -71,13 +71,21 @@ public class SchedulerService {
 		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
 		
 		return schedulerTemplate.getJobGroupNames().stream()
-			.map(group -> schedulerTemplate.getJobKeys(GroupMatcher.groupEquals(group)))
-			.map(jobKeys -> jobKeys.stream()
-					.map(jobKey -> new JobInfo(schedulerTemplate.getJobDetail(jobKey), schedulerTemplate.getTriggersOfJob(jobKey)))
-					.collect(Collectors.toList())
-			)
-			.flatMap(jobInfos -> jobInfos.stream())
-			.collect(Collectors.toList());
+				.map(group -> schedulerTemplate.getJobKeys(GroupMatcher.groupEquals(group)))
+				.map(jobKeys -> jobKeys.stream()
+						.map(jobKey -> new JobInfo(schedulerTemplate.getJobDetail(jobKey), schedulerTemplate.getTriggersOfJob(jobKey)))
+						.collect(Collectors.toList())
+				)
+				.flatMap(jobInfos -> jobInfos.stream())
+				.collect(Collectors.toList());
+	}
+	
+	public List<JobInfo> getJobInfos(String schedulerName, String jobGroup) {
+		SchedulerTemplate schedulerTemplate = this.getSchedulerTemplate(schedulerName);
+		
+		return schedulerTemplate.getJobKeys(GroupMatcher.groupEquals(jobGroup)).stream()
+				.map(jobKey -> new JobInfo(schedulerTemplate.getJobDetail(jobKey), schedulerTemplate.getTriggersOfJob(jobKey)))
+				.collect(Collectors.toList());
 	}
 
 	public JobInfo getJobInfo(String schedulerName, String jobName, String jobGroup) {

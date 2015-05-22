@@ -53,22 +53,22 @@ public class SchedulerUtils {
 	public static AbstractCalendarInfo toCalendarInfo(Calendar calendar) {
 		AbstractCalendarInfo abstractCalendarInfo = null;
 
-		if (calendar instanceof AnnualCalendarInfo) {
+		if (calendar instanceof AnnualCalendar) {
 			abstractCalendarInfo = new AnnualCalendarInfo((AnnualCalendar) calendar);
 
-		} else if (calendar instanceof CronCalendarInfo) {
+		} else if (calendar instanceof CronCalendar) {
 			abstractCalendarInfo = new CronCalendarInfo((CronCalendar) calendar);
 
-		} else if (calendar instanceof DailyCalendarInfo) {
+		} else if (calendar instanceof DailyCalendar) {
 			abstractCalendarInfo = new DailyCalendarInfo((DailyCalendar) calendar);
 
-		} else if (calendar instanceof HolidayCalendarInfo) {
+		} else if (calendar instanceof HolidayCalendar) {
 			abstractCalendarInfo = new HolidayCalendarInfo((HolidayCalendar) calendar);
 
-		} else if (calendar instanceof MonthlyCalendarInfo) {
+		} else if (calendar instanceof MonthlyCalendar) {
 			abstractCalendarInfo = new MonthlyCalendarInfo((MonthlyCalendar) calendar);
 
-		} else if (calendar instanceof WeeklyCalendarInfo) {
+		} else if (calendar instanceof WeeklyCalendar) {
 			abstractCalendarInfo = new WeeklyCalendarInfo((WeeklyCalendar) calendar);
 
 		}

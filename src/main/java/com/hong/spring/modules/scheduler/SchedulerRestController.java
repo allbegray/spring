@@ -59,20 +59,20 @@ public class SchedulerRestController {
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}", method = RequestMethod.GET)
-	public void jobs_group(
+	public List<JobInfo> jobs_group(
 			@PathVariable String schedulerName,
 			@PathVariable String jobGroup) {
 		
-		
+		return schedulerService.getJobInfos(schedulerName, jobGroup);
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}/{jobName}", method = RequestMethod.GET)
-	public void jobs_jobgroup_jobname(
+	public JobInfo jobs_jobgroup_jobname(
 			@PathVariable String schedulerName,
 			@PathVariable String jobGroup,
 			@PathVariable String jobName) {
 		
-		
+		return schedulerService.getJobInfo(schedulerName, jobName, jobGroup);
 	}
 	
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}/{jobName}/run", method = RequestMethod.POST)
@@ -82,7 +82,6 @@ public class SchedulerRestController {
 			@PathVariable String jobName) {
 		
 		schedulerService.executeJobNow(schedulerName, jobName, jobGroup);
-		
 	}
 
 	@RequestMapping(value = "/schedulers/{schedulerName}/jobs/{jobGroup}/{jobName}/triggers", method = RequestMethod.GET)
