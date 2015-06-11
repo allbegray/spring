@@ -1,7 +1,7 @@
 package com.hong.spring.common.jstree.v1;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public abstract class AbstractJsTreeV1NodeConverter<S> implements JsTreeV1NodeConverter<S> {
 
@@ -10,11 +10,7 @@ public abstract class AbstractJsTreeV1NodeConverter<S> implements JsTreeV1NodeCo
 
 	@Override
 	public List<JsTreeV1Node> convert(List<S> source) {
-		List<JsTreeV1Node> nodes = new ArrayList<JsTreeV1Node>(source.size());
-		for (S s : source) {
-			nodes.add(this.convert(s));
-		}
-		return nodes;
+		return source.stream().map(s -> this.convert(s)).collect(Collectors.toList());
 	}
 
 }
