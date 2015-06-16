@@ -21,16 +21,23 @@
         <org.springframework.data.version>1.7.1.RELEASE</org.springframework.data.version>
         <org.slf4j.version>1.7.5</org.slf4j.version>
         <org.jooq.version>3.6.1</org.jooq.version>
+        <org.hibernate.version>4.3.10.Final</org.hibernate.version>
     </properties>
 
     <dependencies>
 
         <!-- persistence -->
-        <dependency>
-            <groupId>org.jooq</groupId>
-            <artifactId>jooq</artifactId>
-            <version>${org.jooq.version}</version>
-        </dependency>
+		<dependency>
+			<groupId>org.jooq</groupId>
+			<artifactId>jooq</artifactId>
+			<version>${org.jooq.version}</version>
+		</dependency>
+	
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-core</artifactId>
+			<version>${org.hibernate.version}</version>
+		</dependency>
 
         <!-- dto -->
         <!--<dependency>
@@ -120,6 +127,12 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
+            <version>${org.springframework.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-orm</artifactId>
             <version>${org.springframework.version}</version>
         </dependency>
 
